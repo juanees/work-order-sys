@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "typegen": "npx pocketbase-typegen --db ./backend/pocketbase/pb_data/data.db --out ./frontend/src/types/db-types.ts",
+    "typegen": "npx pocketbase-typegen --db ./backend/pocketbase/pb_data/data.db --out ./frontend/src/types/db/index.d.ts",
     "be": " cd ./backend/pocketbase && pocketbase serve",
     "fe": "cd ./frontend && npm run dev",
-    "dev": "concurrently  \"npm run be\" \"npm run dev\""
+    "dev": "concurrently  --prefix \"[{index}] {time} \" -c \"auto\"  \"npm run be\" \"npm run fe\""
   },
   "author": "",
   "license": "ISC",
