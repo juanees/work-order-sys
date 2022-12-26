@@ -1,0 +1,21 @@
+{
+  "name": "work-order-system",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "typegen": "npx pocketbase-typegen --db ./backend/pocketbase/pb_data/data.db --out ./frontend/src/types/db-types.ts",
+    "be": " cd ./backend/pocketbase && pocketbase serve",
+    "fe": "cd ./frontend && npm run dev",
+    "dev": "concurrently  \"npm run be\" \"npm run dev\""
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "pocketbase-typegen": "^1.1.2"
+  },
+  "devDependencies": {
+    "concurrently": "^7.6.0"
+  }
+}
