@@ -4,7 +4,6 @@
 
 export enum Collections {
 	Clients = "clients",
-	MaitPete = "mait_pete",
 	Products = "products",
 	Users = "users",
 	Workorders = "workorders",
@@ -40,10 +39,6 @@ export type ClientsRecord = {
 	owner: RecordIdString
 }
 
-export type MaitPeteRecord = {
-	reason: string
-}
-
 export type ProductsRecord = {
 	brand: string
 	name: string
@@ -74,14 +69,12 @@ export type WorkordersRecord = {
 
 // Response types include system fields and match responses from the PocketBase API
 export type ClientsResponse = ClientsRecord & BaseSystemFields
-export type MaitPeteResponse = MaitPeteRecord & BaseSystemFields
 export type ProductsResponse = ProductsRecord & BaseSystemFields
 export type UsersResponse = UsersRecord & AuthSystemFields
 export type WorkordersResponse = WorkordersRecord & BaseSystemFields
 
 export type CollectionRecords = {
 	clients: ClientsRecord
-	mait_pete: MaitPeteRecord
 	products: ProductsRecord
 	users: UsersRecord
 	workorders: WorkordersRecord
