@@ -1,4 +1,6 @@
 /pb_data/storage
+/pb_data/*.db-shm
+/pb_data/*.db-wal
 /pb_data/logs.db
 
 /pb_migrations
