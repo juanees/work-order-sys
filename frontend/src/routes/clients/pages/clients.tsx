@@ -2,7 +2,7 @@ import { ListResult } from "pocketbase";
 import { useLoaderData } from "react-router-dom";
 import { ClientListView } from "../../../components";
 import { CollectionsService } from "../../../services/collections";
-import { ClientsResponse } from "../../../types/db-types";
+import { ClientsResponse } from "../../../types/db";
 
 export async function ClientsLoader() {
   const service = new CollectionsService<ClientsResponse>("clients");
@@ -12,5 +12,11 @@ export async function ClientsLoader() {
 
 export function ClientsPage() {
   const loadedData = useLoaderData() as ListResult<ClientsResponse>;
-  return <ClientListView clients={loadedData.items} />;
+  const pagination = {
+    page: loadedData.page,
+    perPage: loadedData.perPage,
+    totalItems: loadedData.totalItems,
+    totalPages: loadedData.totalPages,
+  };
+  return <ClientListView clients={loadedData.items} pagination={pagination} />;
 }

@@ -1,12 +1,12 @@
 import { CrudModes } from "../../types/crud-modes";
-import { ClientsResponse } from "../../types/db-types";
+import { ClientsResponse } from "../../types/db";
 
 export function ClientView({
   mode,
   client,
 }: {
   mode: CrudModes;
-  client: ClientsResponse | null;
+  client: ClientsResponse;
 }): JSX.Element {
   console.log(
     "🚀 ~ file: create-read-update.tsx:11 ~ mode, client,",
@@ -15,11 +15,10 @@ export function ClientView({
   );
 
   return (
-    <>
-      <div>{mode}</div>
-      <div>
-        <code>{JSON.stringify(client)}</code>
-      </div>
-    </>
+    <div>
+      <div>{client.name}</div>
+      <div>{client.address}</div>
+      <div>{client.phone}</div>
+    </div>
   );
 }
