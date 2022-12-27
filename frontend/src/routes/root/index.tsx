@@ -1,9 +1,30 @@
-import { Link, Outlet } from "react-router-dom";
+import {
+  Link,
+  LoaderFunctionArgs,
+  Outlet,
+  redirect,
+  useNavigate,
+} from "react-router-dom";
+import { AuthService } from "../../services";
 
-export async function RootLoader() {
-  return null;
+export async function RootLoader({ request: { url } }: LoaderFunctionArgs) {
+  if (await AuthService.isUserLogged()) {
+    return null;
+  }
+
+  const searchParam = new URLSearchParams();
+  searchParam.append("redirect_url", new URL(url).pathname);
+
+  return redirect("/login?" + searchParam.toString());
 }
 export function RootPage() {
+  const navigate = useNavigate();
+
+  const closeSession = () => {
+    AuthService.logout();
+    return navigate("/login");
+  };
+
   return (
     <>
       <div id="sidebar">
@@ -25,6 +46,9 @@ export function RootPage() {
             </li>
             <li>
               <Link to={`products`}>Products</Link>
+            </li>
+            <li>
+              <button onClick={closeSession}>Cerrar sesión</button>
             </li>
           </ul>
         </nav>

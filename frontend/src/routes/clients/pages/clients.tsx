@@ -1,7 +1,7 @@
 import { ListResult } from "pocketbase";
 import { useLoaderData } from "react-router-dom";
 import { ClientListView } from "../../../components";
-import { CollectionsService } from "../../../services";
+import { CollectionsService } from "../../../services/collections";
 import { ClientsResponse } from "../../../types/db-types";
 
 export async function ClientsLoader() {

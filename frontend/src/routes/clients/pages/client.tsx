@@ -1,6 +1,6 @@
 import { LoaderFunctionArgs, useLoaderData } from "react-router-dom";
 import { ClientView } from "../../../components";
-import { CollectionsService } from "../../../services";
+import { CollectionsService } from "../../../services/collections";
 import { ClientsResponse } from "../../../types/db-types";
 
 export async function ClientLoader({ params }: LoaderFunctionArgs) {

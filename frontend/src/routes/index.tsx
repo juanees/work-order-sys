@@ -7,6 +7,7 @@ import {
   ClientsPage,
   ClientsLoader,
 } from "./clients";
+import LoginPage, { LoginLoader } from "./auth";
 
 export default createBrowserRouter([
   {
@@ -28,4 +29,5 @@ export default createBrowserRouter([
       },
     ],
   },
+  { id: "login", path: "/login", element: <LoginPage />, loader: LoginLoader },
 ]);
