@@ -9,7 +9,7 @@ import { ProductsRecord, ProductsResponse } from "../../../types/db";
 
 const service = new CollectionsService<ProductsResponse>("products");
 export async function ProductsLoader() {
-  const products = await service.getAll();
+  const products = await service.getAll({ sort: "-created" });
   return products;
 }
 
@@ -20,7 +20,10 @@ export function ProductsPage() {
     <ProductsGrid
       data={data}
       onChangePagination={async function (nextPage): Promise<void> {
-        const data = await service.getAll({ page: nextPage });
+        const data = await service.getAll({
+          page: nextPage,
+          sort: "-created",
+        });
         setData(data);
       }}
       onAdd={async function (product: ProductsRecord): Promise<void> {

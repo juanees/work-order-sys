@@ -39,12 +39,10 @@ export class CollectionsService<T> implements ICollectionsService<T> {
   getAll(query?: FetchQuery): Promise<ListResult<T>> {
     try {
       return new Promise<ListResult<T>>((resolve, reject) => {
-        // TODO: FIX THIS WAY OF INITIALIZAING THE QUERY OBJ WHEN WE NEED SOME DEFAULT VALUES
-        query = query || {};
+        query = { page: 1, perPage: 30, ...query };
         this.client
           .collection(this.collectionName)
-          // TODO: FIX THIS WAY OF INITIALIZAING THE QUERY OBJ WHEN WE NEED SOME DEFAULT VALUES
-          .getList<T>(query.page || 1, query.perPage || 5, { ...query })
+          .getList<T>(query.page, query.perPage, { ...query })
           .then((list) => resolve(list))
           .catch((err) => reject(err));
       });
