@@ -3,6 +3,7 @@ import { Button, Divider, Form, Input, Modal, Pagination, Table } from "antd";
 import { ProductsRecord, ProductsResponse } from "../../types/db";
 import { ListResult } from "pocketbase";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { z } from "zod";
 
 export default function ProductsGrid({
   data,
@@ -12,10 +13,10 @@ export default function ProductsGrid({
   onDelete,
 }: {
   data: ListResult<ProductsResponse>;
-  onChangePagination: (nextPage: number) => Promise<void>;
-  onAdd: (product: ProductsRecord) => Promise<void>;
-  onEdit: (product: ProductsRecord & { id: string }) => Promise<void>;
-  onDelete: (id: string) => Promise<void>;
+  onChangePagination: (nextPage: number) => void;
+  onAdd: (product: ProductsRecord) => void;
+  onEdit: (product: ProductsRecord & { id: string }) => void;
+  onDelete: (id: string) => void;
 }) {
   const columns = [
     {
@@ -96,8 +97,13 @@ export default function ProductsGrid({
     onCancel: () => void;
   }) => {
     const onFinish = (values: any) => {
-      // TODO: ADD ZOD VALIDATION
-      onSave({ ...values } as ProductsRecord);
+      const Product = z.object({
+        id: z.string().optional(),
+        brand: z.string(),
+        name: z.string(),
+        owner: z.string(),
+      });
+      onSave(Product.parse({ ...values }));
     };
 
     return (
@@ -109,10 +115,15 @@ export default function ProductsGrid({
           id: item?.id ?? "",
           name: item?.name ?? "",
           brand: item?.brand ?? "",
+          owner: item?.owner ?? "",
         }}
         onFinish={onFinish}
         autoComplete="off">
         <Form.Item name="id" hidden>
+          <Input />
+        </Form.Item>
+
+        <Form.Item name="owner" hidden>
           <Input />
         </Form.Item>
 
@@ -146,7 +157,7 @@ export default function ProductsGrid({
   const isItemWithId = (
     item: ProductsRecord & { id?: string }
   ): item is ProductsRecord & { id: string } => {
-    const itemWithId = item as ProductsRecord & { id?: string };
+    const itemWithId = item as { id?: string };
     return itemWithId.id !== undefined && itemWithId.id !== "";
   };
 

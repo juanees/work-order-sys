@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ListResult } from "pocketbase";
 import { useLoaderData } from "react-router-dom";
 
@@ -15,30 +15,37 @@ export async function ProductsLoader() {
 
 export function ProductsPage() {
   const loadedData = useLoaderData() as ListResult<ProductsResponse>;
+  const [currentPage, setCurrentPage] = useState(0);
   const [data, setData] = useState(loadedData);
+
+  useEffect(() => {
+    updateData();
+  }, [currentPage]);
+
+  const updateData = () => {
+    service
+      .getAll({
+        page: currentPage,
+        sort: "-created",
+      })
+      .then(setData)
+      .catch(console.error);
+  };
+
   return (
     <ProductsGrid
       data={data}
-      onChangePagination={async function (nextPage): Promise<void> {
-        const data = await service.getAll({
-          page: nextPage,
-          sort: "-created",
-        });
-        setData(data);
+      onChangePagination={(nextPage) => {
+        setCurrentPage(nextPage);
       }}
-      onAdd={async function (product: ProductsRecord): Promise<void> {
-        await service.create(product);
-        service.getAll().then(setData).catch(console.error);
+      onAdd={(product) => {
+        service.create(product).then(updateData).catch(console.error);
       }}
-      onEdit={async function (
-        product: ProductsRecord & { id: string }
-      ): Promise<void> {
-        await service.update(product);
-        service.getAll().then(setData).catch(console.error);
+      onEdit={(product) => {
+        service.update(product).then(updateData).catch(console.error);
       }}
-      onDelete={async function (id: string): Promise<void> {
-        await service.delete(id);
-        service.getAll().then(setData).catch(console.error);
+      onDelete={(id) => {
+        service.delete(id).then(updateData).catch(console.error);
       }}
     />
   );

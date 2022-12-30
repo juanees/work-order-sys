@@ -1,3 +1,4 @@
+import { ConsoleSqlOutlined } from "@ant-design/icons";
 import PocketBase, { ListResult } from "pocketbase";
 
 export interface FetchQuery {
@@ -39,7 +40,7 @@ export class CollectionsService<T> implements ICollectionsService<T> {
   getAll(query?: FetchQuery): Promise<ListResult<T>> {
     try {
       return new Promise<ListResult<T>>((resolve, reject) => {
-        query = { page: 1, perPage: 30, ...query };
+        query = { page: 1, perPage: 5, ...query };
         this.client
           .collection(this.collectionName)
           .getList<T>(query.page, query.perPage, { ...query })
