@@ -46,6 +46,11 @@ export function RootPage() {
             </li>
             <li>
               <Link to={`products`}>Products</Link>
+              <ul>
+                <li>
+                  <Link to={`products/i86cwkq4sltr6sw`}>Product test</Link>
+                </li>
+              </ul>
             </li>
             <li>
               <button onClick={closeSession}>Cerrar sesión</button>

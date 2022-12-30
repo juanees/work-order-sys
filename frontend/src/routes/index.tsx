@@ -8,6 +8,12 @@ import {
   ClientsLoader,
 } from "./clients";
 import LoginPage, { LoginLoader } from "./auth";
+import {
+  ProductPage,
+  ProductLoader,
+  ProductsPage,
+  ProductsLoader,
+} from "./products";
 
 export default createBrowserRouter([
   {
@@ -26,6 +32,16 @@ export default createBrowserRouter([
         path: "/clients/:clientId",
         element: <ClientPage />,
         loader: ClientLoader,
+      },
+      {
+        path: "/products/",
+        element: <ProductsPage />,
+        loader: ProductsLoader,
+      },
+      {
+        path: "/products/:productId",
+        element: <ProductPage />,
+        loader: ProductLoader,
       },
     ],
   },
